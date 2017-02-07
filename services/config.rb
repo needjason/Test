@@ -10,3 +10,33 @@
 ##   internet_gateway true
 ## end
 ##
+coreo_aws_rule "s3-allusers-write-acp" do
+  action :define
+  service :s3
+  link "http://kb.cloudcoreo.com/mydoc_s3-allusers-write-acp.html"
+  display_name "All users can write the bucket ACP / ACL"
+  description "Bucket has permissions (ACP / ACL) which let all users modify the permissions."
+  category "Dataloss"
+  suggested_action "Remove the entry from the bucket permissions that allows everyone to edit permissions."
+  level "Jason"
+  objectives    [ "bucket_acl","bucket_acl"]
+  audit_objects ["grants.grantee.uri", "grants.permission"]
+  operators     ["=~", "=="]
+  raise_when    [/AllUsers/i, "write_acp"]
+  id_map "modifiers.bucket_name"
+end
+coreo_aws_rule "Jasons-rule" do
+  action :define
+  service :s3
+  link "http://kb.cloudcoreo.com/mydoc_s3-allusers-write-acp.html"
+  display_name "All users can write the bucket ACP / ACL"
+  description "Bucket has permissions (ACP / ACL) which let all users modify the permissions."
+  category "Dataloss"
+  suggested_action "Remove the entry from the bucket permissions that allows everyone to edit permissions."
+  level "Emergency"
+  objectives    [ "bucket_acl","bucket_acl"]
+  audit_objects ["grants.grantee.uri", "grants.permission"]
+  operators     ["=~", "=="]
+  raise_when    [/AllUsers/i, "write_acp"]
+  id_map "modifiers.bucket_name"
+end
